@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.831,=C:\Users\iei\Documents\Embarcadero\Studio\Projekte\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.800,C:\Users\iei\Documents\Embarcadero\Studio\Projekte\Unit3.pas=C:\Users\iei\Documents\Embarcadero\Studio\Projekte\uStockAPI.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.246,C:\Users\iei\OneDrive - Orgadata Software-Dienstleistungen AG\Projekte\Delphi\Aktienprogramm\Project3.dproj=C:\Users\iei\OneDrive - Orgadata Software-Dienstleistungen AG\Projekte\Delphi\Aktienprogramm\Aktienprogramm.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.141,C:\Users\iei\Documents\Embarcadero\Studio\Projekte\Project3.dproj=C:\Users\iei\Documents\Embarcadero\Studio\Projekte\Project3.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.418,=C:\Users\iei\Documents\Embarcadero\Studio\Projekte\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.512,=C:\Users\iei\Documents\Embarcadero\Studio\Projekte\Unit2.pas</Transaction>
+  </Transactions>
+</BorlandProject>

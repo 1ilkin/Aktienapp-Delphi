@@ -1,0 +1,87 @@
+﻿unit uStockAPI;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, System.JSON, System.Net.URLClient,
+  System.Net.HttpClient, System.Net.HttpClientComponent;
+
+type
+  TStockAPI = class
+  private
+    FHttpClientAPI: TNetHTTPClient;
+    FApiKey: string;
+    const BASE_URL = 'https://api.polygon.io/v2/aggs/ticker/';
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function GetStockInfo(const Symbol: string): string;
+    function SearchSuggestions() : string;
+  end;
+
+implementation
+
+constructor TStockAPI.Create;
+begin
+  inherited Create;
+  FHttpClientAPI := TNetHTTPClient.Create(nil);
+  FApiKey := 'acCvZRIAJJxwkKJrKeMiFFPy9bBjIZYN';
+end;
+
+destructor TStockAPI.Destroy;
+begin
+  FHttpClientAPI.Free;
+  inherited;
+end;
+
+function SearchSuggestions() : string;
+begin
+
+end;
+
+function TStockAPI.GetStockInfo(const Symbol: string): string;
+var
+  Response: string;
+  JSONObj, StockData: TJSONObject;
+  ResultsArray: TJSONArray;
+  OpenPrice, HighPrice, LowPrice, ClosePrice, VWAP, Volume: Double;
+begin
+  Result := '';
+
+  try
+    Response := FHttpClientAPI.Get(BASE_URL + Symbol + '/prev?adjusted=true&apiKey=' + FApiKey).ContentAsString;
+
+    JSONObj := TJSONObject.ParseJSONValue(Response) as TJSONObject;
+    if Assigned(JSONObj) then
+    try
+      if JSONObj.TryGetValue<TJSONArray>('results', ResultsArray) and (ResultsArray.Count > 0) then
+      begin
+        StockData := ResultsArray.Items[0] as TJSONObject;
+
+        OpenPrice := StockData.GetValue<Double>('o');
+        HighPrice := StockData.GetValue<Double>('h');
+        LowPrice := StockData.GetValue<Double>('l');
+        ClosePrice := StockData.GetValue<Double>('c');
+        VWAP := StockData.GetValue<Double>('vw');
+        Volume := StockData.GetValue<Double>('v');
+
+        Result := Format(
+          'Opening Price: %.2f' + sLineBreak + sLineBreak +
+          'Closing Price: %.2f' + sLineBreak + sLineBreak +
+          'Highest Price of the Day: %.2f' + sLineBreak + sLineBreak +
+          'Lowest Price of the Day: %.2f' + sLineBreak + sLineBreak +
+          'Volume-Weighted Average Price: %.2f' + sLineBreak + sLineBreak +
+          'Trading Volume: %.0f',
+          [OpenPrice, ClosePrice, HighPrice, LowPrice, VWAP, Volume]
+        );
+      end;
+    finally
+      JSONObj.Free;
+    end;
+  except
+    on E: Exception do
+      Result := 'Error API: ' + E.Message;
+  end;
+end;
+
+end.
